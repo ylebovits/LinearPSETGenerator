@@ -4,3 +4,5 @@ This program can be used to generate problem sets for linear algebra containing 
 * systems of linear equations
 * eigenvector / eigenvalue / eigenspace
 * column, row, and null space
+
+Output can be specified as .tex, .dvi, or .pdf
