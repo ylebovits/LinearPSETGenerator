@@ -1,11 +1,12 @@
+#include <iostream>
 #include "Matrix.h"
 
 int Matrix::getNumRows() const {
-    return numRows;
+    return this->numRows;
 }
 
 int Matrix::getNumCols() const {
-    return numCols;
+    return this->numCols;
 }
 
 void Matrix::setEntry(int row, int col, double value) {
@@ -49,12 +50,13 @@ Matrix::Matrix(int numRows, int numCols) : numRows(numRows), numCols(numCols) {
     this->numRows = numRows;
 
     this->matrix = new double*[numRows];
-    for (auto i = 0; i < numCols; ++i)
+
+    for (auto i = 0; i < this->getNumRows(); ++i)
         this->matrix[i] = new double[numCols];
 
     for (auto row = 0; row < this->getNumRows(); ++row) {
         for (auto col = 0; col < this->getNumCols(); ++col) {
-            this->matrix[row][col] = 0;
+            this->matrix[row][col] = 0.0;
         }
     }
 }
@@ -70,12 +72,15 @@ std::ostream &operator<<(std::ostream &os, const Matrix &matrix) {
 
     return os;
 }
-//
-//Matrix::~Matrix() {
-//
-//    for (auto row = 0; row < this->getNumRows(); ++row)
-//        free(this->matrix[row]);
-//
-//}
+
+Matrix::~Matrix() {
+
+    for (auto row = 0; row < this->getNumRows(); ++row)
+        delete[] this->matrix[row];
+
+    delete[] this->matrix;
+
+}
+
 
 

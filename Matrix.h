@@ -16,7 +16,7 @@ protected:
 public:
     Matrix(int numRows, int numCols);
 
-   // virtual ~Matrix();
+    virtual ~Matrix();
 
     int getNumRows() const;
     int getNumCols() const;
