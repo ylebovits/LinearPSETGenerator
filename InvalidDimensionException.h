@@ -9,7 +9,8 @@
 
 class InvalidDimensionException : public std::runtime_error {
 public:
-    InvalidDimensionException() : std::runtime_error("The dimensions of a nonsingular must be nonzero and equal") { }
+    InvalidDimensionException() : std::runtime_error("The dimensions of a nonsingular must be nonzero and equal") {
+    }
 };
 
 #endif //LINEARPSETGENERATOR_INVALIDDIMENSIONEXCEPTION_H

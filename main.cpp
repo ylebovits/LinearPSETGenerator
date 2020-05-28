@@ -1,32 +1,31 @@
 #include <iostream>
 #include "Matrix.h"
+#include "InvalidDimensionException.h"
+#include "NonsingularMatrix.h"
 //#include "NonsingularMatrix.h"
 //#include "NonsingularMatrix.cpp"
 
 /*
  * TODO:
- * deal with memory leaks
- * properly create an InvalidDimensionException and throw it
+ * segfault when scrambling matrices, probably needs to be fixed
  */
 
 int main() {
 
-//    try {
-        Matrix m {3, 4};
+    try {
 
-        m.setEntry(2, 3, 5);
-        m.addScale(2, 0, -2.33);
-        m.swapRow(0, 1);
-        m.scaleRow(2, 2.25);
+        NonsingularMatrix m {5, 5};
 
-        // Matrix c = m.copy();
+//        m.setEntry(2, 3, 5);
+//        m.addScale(2, 0, -402.33);
+//        m.swapRow(0, 1);
+//        m.scaleRow(2, 2.25);
 
-        // std::cout << c << std::endl;
+        std::cout << m << std::endl;
 
-
-//    } catch (InvalidDimensionException *exception) {
-//        std::cout << "working\n";
-//    }
+    } catch (const InvalidDimensionException& e) {
+        std::cerr << e.what() << std::endl;
+    }
 
     return 0;
 }

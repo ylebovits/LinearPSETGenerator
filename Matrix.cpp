@@ -1,4 +1,5 @@
 #include <iostream>
+#include <random>
 #include "Matrix.h"
 
 int Matrix::getNumRows() const {
@@ -18,6 +19,7 @@ double Matrix::getEntry(int row, int col) {
 }
 
 void Matrix::swapRow(int src, int dest) {
+    if (src == dest) return;
     double *tmp = this->matrix[src];
     this->matrix[src] = this->matrix[dest];
     this->matrix[dest] = tmp;
@@ -74,12 +76,37 @@ std::ostream &operator<<(std::ostream &os, const Matrix &matrix) {
 }
 
 Matrix::~Matrix() {
-
     for (auto row = 0; row < this->getNumRows(); ++row)
         delete[] this->matrix[row];
 
     delete[] this->matrix;
+}
 
+void Matrix::scramble() {
+
+    std::random_device rnd;
+    std::mt19937 gen(rnd());
+    std::uniform_int_distribution<> dis(0, 15);
+
+    int loops = dis(gen);
+    int choice;
+
+    std::uniform_int_distribution<> dis2(7, 13);
+    std::uniform_int_distribution<> alpha(-4, 4);
+    std::uniform_int_distribution<> row(0, this->getNumRows()-1);
+
+
+
+    for (auto i = 0; i < loops; i++) {
+        choice = dis(gen);
+
+        if (choice < 2)
+            this->scaleRow(row(gen), alpha(gen));
+        else if (choice < 5)
+            this->swapRow(row(gen), alpha(gen));
+        else
+            this->addScale(row(gen), row(gen), alpha(gen));
+    }
 }
 
 

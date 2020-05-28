@@ -25,6 +25,7 @@ public:
     void swapRow(int src, int dest);
     void scaleRow(int row, double alpha);
     void addScale(int src, int dest, double alpha);
+    void scramble();
     Matrix copy();
 
     friend std::ostream &operator<<(std::ostream &os, const Matrix &matrix);
