@@ -1,10 +1,9 @@
-//
-// Created by yakir on 5/24/20.
-//
-
 #include <random>
 #include "NonsingularMatrix.h"
 #include "InvalidDimensionException.h"
+
+#define MAX_SOLUTION_VALUE 8
+#define MIN_SOLUTION_VALUE -8
 
 NonsingularMatrix::NonsingularMatrix(int numRows, int numCols) : Matrix(numRows, numCols + 1) { // addl column for solutions
     if ( numRows != numCols || numRows == 0 )
@@ -13,14 +12,18 @@ NonsingularMatrix::NonsingularMatrix(int numRows, int numCols) : Matrix(numRows,
     for (auto row = 0; row < this->getNumRows(); ++row)
         this->setEntry(row, row, 1);
 
-    srand(time(nullptr));
 
-    std::random_device rnd;
-    std::mt19937 gen(rnd());
-    std::uniform_int_distribution<> dis(-7, 7);
+    std::default_random_engine engine(std::random_device{}());
+    std::normal_distribution<double> dis(0, 7);
 
-    for (auto x = 0; x < this->getNumRows(); ++x)
-        this->setEntry(x, this->getNumCols()-1, dis(gen));
+    int rand_pick = INT32_MIN;
 
-    this->scramble();
+    for (auto x = 0; x < this->getNumRows(); ++x) {
+
+        do {
+            rand_pick = (int)dis(engine);
+        } while ( (rand_pick < MIN_SOLUTION_VALUE) || (rand_pick > MAX_SOLUTION_VALUE) );
+
+        this->setEntry(x, this->getNumCols()-1, rand_pick);
+    }
 }
