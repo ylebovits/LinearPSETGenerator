@@ -7,7 +7,7 @@
 
 /*
  * TODO:
- * segfault when scrambling matrices, probably needs to be fixed
+ * rewrite scrambling procedure
  */
 
 int main() {
@@ -16,12 +16,12 @@ int main() {
 
         NonsingularMatrix m {5, 5};
 
+        std::cout << m << std::endl;
+
 //        m.setEntry(2, 3, 5);
 //        m.addScale(2, 0, -402.33);
 //        m.swapRow(0, 1);
 //        m.scaleRow(2, 2.25);
-
-        std::cout << m << std::endl;
 
     } catch (const InvalidDimensionException& e) {
         std::cerr << e.what() << std::endl;

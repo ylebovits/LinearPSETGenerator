@@ -13,6 +13,7 @@ NonsingularMatrix::NonsingularMatrix(int numRows, int numCols) : Matrix(numRows,
         this->setEntry(row, row, 1);
 
 
+    /* use gaussian distribution to keep SSLE solutions as small integers */
     std::default_random_engine engine(std::random_device{}());
     std::normal_distribution<double> dis(0, 7);
 
@@ -26,4 +27,8 @@ NonsingularMatrix::NonsingularMatrix(int numRows, int numCols) : Matrix(numRows,
 
         this->setEntry(x, this->getNumCols()-1, rand_pick);
     }
+
+    this->save_row_reduction();
+    /* perform row ops to unreduce the matrix */
+    this->scramble();
 }

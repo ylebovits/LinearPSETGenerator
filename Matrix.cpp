@@ -47,6 +47,20 @@ Matrix Matrix::copy() {
     return m;
 }
 
+// keep a copy of the matrix entries from before it's scrambled
+void Matrix::save_row_reduction() {
+    this->row_reduction = new double*[numRows];
+
+    for (auto i = 0; i < this->getNumRows(); ++i)
+        this->row_reduction[i] = new double[numCols];
+
+    for (auto row = 0; row < this->getNumRows(); ++row) {
+        for (auto col = 0; col < this->getNumCols(); ++col) {
+            this->row_reduction[row][col] = this->getEntry(row, col);
+        }
+    }
+}
+
 Matrix::Matrix(int numRows, int numCols) : numRows(numRows), numCols(numCols) {
     this->numCols = numCols;
     this->numRows = numRows;
@@ -76,17 +90,20 @@ std::ostream &operator<<(std::ostream &os, const Matrix &matrix) {
 }
 
 Matrix::~Matrix() {
-    for (auto row = 0; row < this->getNumRows(); ++row)
+    for (auto row = 0; row < this->getNumRows(); ++row) {
         delete[] this->matrix[row];
+        delete[] this->row_reduction[row];
+    }
 
     delete[] this->matrix;
+    delete[] this->row_reduction;
 }
 
 void Matrix::scramble() {
 
     std::random_device rnd;
     std::mt19937 gen(rnd());
-    std::uniform_int_distribution<> dis(0, 15);
+    std::uniform_int_distribution<> dis(10, 15);
 
     int loops = dis(gen);
     int choice;
@@ -96,18 +113,22 @@ void Matrix::scramble() {
     std::uniform_int_distribution<> row(0, this->getNumRows()-1);
 
 
-
     for (auto i = 0; i < loops; i++) {
-        choice = dis(gen);
 
-        if (choice < 2)
-            this->scaleRow(row(gen), alpha(gen));
-        else if (choice < 5)
-            this->swapRow(row(gen), alpha(gen));
-        else
-            this->addScale(row(gen), row(gen), alpha(gen));
+        this->scaleRow(row(gen), alpha(gen));
+
+  //      choice = dis(gen);
+
+//        if (choice < 2)
+//            this->scaleRow(row(gen), alpha(gen));
+//        else if (choice < 5)
+//            this->swapRow(row(gen), alpha(gen));
+//        else
+//            this->addScale(row(gen), row(gen), alpha(gen));
+//    }
+//}
     }
-}
 
+    }
 
 

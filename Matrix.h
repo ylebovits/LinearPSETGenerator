@@ -8,16 +8,15 @@ class Matrix {
 
 private:
     double **matrix;
+    double **row_reduction; // original matrix before scramble
 
 protected:
     int numRows;
     int numCols;
+    void save_row_reduction();
 
 public:
     Matrix(int numRows, int numCols);
-
-    virtual ~Matrix();
-
     int getNumRows() const;
     int getNumCols() const;
     void setEntry(int row, int col, double value);
@@ -27,6 +26,8 @@ public:
     void addScale(int src, int dest, double alpha);
     void scramble();
     Matrix copy();
+
+    virtual ~Matrix();
 
     friend std::ostream &operator<<(std::ostream &os, const Matrix &matrix);
 };
